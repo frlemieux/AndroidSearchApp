@@ -38,6 +38,17 @@ dependencies {
 
     implementation(project(":domain"))
 
+    // Retrofit
+    implementation(libs.retrofit.rx)
+    implementation(libs.retrofit.converter)
+    implementation(libs.retrofit.core)
+
+    // Room
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.room.paging)
+
+    // Paging runtime
     implementation(libs.androidx.paging)
 
     implementation(libs.androidx.core.ktx)

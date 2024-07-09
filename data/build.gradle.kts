@@ -26,11 +26,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.retrofit.rx)
     implementation(libs.retrofit.converter)
     implementation(libs.retrofit.core)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     // Room
     implementation(libs.room.ktx)

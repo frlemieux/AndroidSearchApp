@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.search"
+    namespace = "com.example.feature.search"
     compileSdk = 34
 
     defaultConfig {
@@ -30,15 +30,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
+
+    implementation(project(":domain"))
+
+    // Paging runtime
+    implementation(libs.androidx.paging)
+    implementation(libs.androidx.paging.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -57,4 +63,5 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.ext.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

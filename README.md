@@ -15,3 +15,6 @@ of your research indefinitly.
 - The entire app is implemented using coroutines.
 - Several Jetpack libraries are used, such as: Material, Paging, Compose, Hilt, Room, Test.
 - And an unit test example implementation of a mapping function in MapperTest.kt
+
+<br>
+<img src="screenshot%2FScreenshot.png" width="300" />

@@ -9,7 +9,7 @@ of your research indefinitly.
 
 
 - The code base is entirely in Kotlin.
-- Dependency injection is done using Hilt.
+- Dependency injection is done using Hilt. ([koin injection here](https://github.com/frlemieux/Search/tree/koin_di))
 - The list works with pagination.
 - The app architecture has three layers: data, domain, feature (UI).
 - The entire app is implemented using coroutines.

@@ -8,18 +8,14 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.domain.model.Repo
 import com.example.domain.repository.RepoRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
-@HiltViewModel
 class SearchViewModel
-    @Inject
     constructor(
         private val searchRepository: RepoRepository,
         private val savedStateHandle: SavedStateHandle,

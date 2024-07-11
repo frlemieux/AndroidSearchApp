@@ -34,15 +34,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.search.component.SearchTextField
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
+    viewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
     modifier: Modifier = Modifier,
 ) {
     val repos = viewModel.pagingData.collectAsLazyPagingItems()

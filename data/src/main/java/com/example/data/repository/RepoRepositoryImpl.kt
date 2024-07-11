@@ -12,10 +12,8 @@ import com.example.domain.model.Repo
 import com.example.domain.repository.RepoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class RepoRepositoryImpl
-    @Inject
     constructor(
         private val repoApi: GithubApi,
         private val repoDatabase: RepoDatabase,

@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
 
@@ -60,8 +59,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    ksp(libs.hilt.ext.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.view.model)
 }

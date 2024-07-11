@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -58,10 +57,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":feature:search"))
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    ksp(libs.hilt.ext.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

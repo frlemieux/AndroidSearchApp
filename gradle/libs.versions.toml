@@ -10,8 +10,9 @@ activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 appcompat = "1.7.0"
 material = "1.12.0"
-hilt = "2.51.1"
-hiltExt = "1.2.0"
+koin = "3.5.6"
+koin-compose = "3.5.6"
+koin-compose-view-model = "1.2.0-Beta4"
 ksp = "2.0.0-1.0.21"
 paging = "3.3.0"
 retrofit = "2.9.0"
@@ -36,10 +37,10 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltExt" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
+koin-view-model =  {module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-compose-view-model"}
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-rx = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "retrofit" }
 retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -53,5 +54,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -43,8 +43,8 @@ import com.example.search.component.SearchTextField
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
     modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
 ) {
     val repos = viewModel.pagingData.collectAsLazyPagingItems()
     val searchQuery by viewModel.searchQuery.collectAsState()
@@ -158,7 +158,7 @@ fun CardRepoItem(
     modifier: Modifier,
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = modifier.fillMaxWidth().padding(8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
     ) {

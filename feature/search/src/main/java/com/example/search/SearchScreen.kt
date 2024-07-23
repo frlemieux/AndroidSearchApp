@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -97,8 +98,8 @@ fun ListContent(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        contentPadding = PaddingValues(vertical = 16.dp),
                     ) {
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
                         items(count = repos.itemCount, key = { it }) {
                             repos[it]?.let { repoItem ->
                                 CardRepoItem(
@@ -112,7 +113,6 @@ fun ListContent(
                                 CircularProgressIndicator()
                             }
                         }
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
                     }
                 }
                 else -> {

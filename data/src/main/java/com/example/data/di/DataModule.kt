@@ -4,20 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import com.example.data.local.RepoDatabase
 import com.example.data.remote.GithubApi
-import com.example.data.repository.RepoRepositoryImpl
-import com.example.domain.repository.RepoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
-@Module
+@Module(includes = [RepositoryModule::class])
 @InstallIn(SingletonComponent::class)
 object DataModule {
     @Provides
@@ -25,11 +25,7 @@ object DataModule {
     fun provideGithubRetrofit(): Retrofit {
         val logger = HttpLoggingInterceptor()
         logger.level = HttpLoggingInterceptor.Level.BASIC
-        val client =
-            OkHttpClient
-                .Builder()
-                .addInterceptor(logger)
-                .build()
+        val client = OkHttpClient.Builder().addInterceptor(logger).build()
         return Retrofit
             .Builder()
             .baseUrl("https://api.github.com/")
@@ -56,8 +52,5 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideRepoRepositoryImpl(
-        contactApi: GithubApi,
-        contactDatabase: RepoDatabase,
-    ): RepoRepository = RepoRepositoryImpl(contactApi, contactDatabase)
+    fun provideDefaultCoroutineScope(): CoroutineContext = Dispatchers.Default
 }

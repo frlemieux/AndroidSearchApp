@@ -11,14 +11,17 @@ import com.example.data.remote.GithubRemoteMediator
 import com.example.domain.model.Repo
 import com.example.domain.repository.RepoRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class RepoRepositoryImpl
     @Inject
     constructor(
         private val repoApi: GithubApi,
         private val repoDatabase: RepoDatabase,
+        private val default: CoroutineContext,
     ) : RepoRepository {
         override fun getPagingDataRepo(query: String): Flow<PagingData<Repo>> {
             @OptIn(ExperimentalPagingApi::class)
@@ -31,8 +34,9 @@ class RepoRepositoryImpl
                         repoDatabase,
                     ),
                 pagingSourceFactory = { repoDatabase.reposDao.repoEntityPagingSource() },
-            ).flow.map { pagingData ->
-                pagingData.map { it.toDomain() }
-            }
+            ).flow
+                .map { pagingData ->
+                    pagingData.map { it.toDomain() }
+                }.flowOn(default)
         }
     }

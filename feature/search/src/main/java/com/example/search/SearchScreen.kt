@@ -70,13 +70,18 @@ fun ListContent(
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         snapshotFlow { repos.loadState }.collect { loadStates ->
-            if (loadStates.refresh is LoadState.Error || loadStates.append is LoadState.Error) {
-                Toast
-                    .makeText(
-                        context,
-                        "No internet connection",
-                        Toast.LENGTH_LONG,
-                    ).show()
+            when (loadStates.refresh) {
+                is LoadState.Error -> {
+                    Toast
+                        .makeText(
+                            context,
+                            (repos.loadState.refresh as LoadState.Error)
+                                .error.message
+                                .toString(),
+                            Toast.LENGTH_LONG,
+                        ).show()
+                }
+                else -> Unit
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.data.local.RepoDatabase
 import com.example.data.local.entity.RepoEntity
+import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -61,7 +62,10 @@ class GithubRemoteMediator(
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
             resetDb()
-            return MediatorResult.Error(exception)
+            val errorBody = exception.response()?.errorBody()?.string()
+            val gson = Gson()
+            val errorResponse = gson.fromJson(errorBody, GitHubErrorResponse::class.java)
+            return MediatorResult.Error(Throwable(errorResponse.errorMessage()))
         }
     }
 

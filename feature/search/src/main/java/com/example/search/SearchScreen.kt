@@ -50,7 +50,7 @@ fun SearchScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     Column {
         ListContent(
-            repos = repos,
+            lazyPagingItems = repos,
             searchQuery = searchQuery,
             onSearchQueryChanged = viewModel::onSearchQueryChanged,
             onSearchTriggered = viewModel::onSearchTriggered,
@@ -61,7 +61,7 @@ fun SearchScreen(
 
 @Composable
 fun ListContent(
-    repos: LazyPagingItems<RepoItem>,
+    lazyPagingItems: LazyPagingItems<RepoItem>,
     searchQuery: String = "",
     onSearchQueryChanged: (String) -> Unit = {},
     onSearchTriggered: (String) -> Unit = {},
@@ -69,18 +69,17 @@ fun ListContent(
 ) {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        snapshotFlow { repos.loadState }.collect { loadStates ->
+        snapshotFlow { lazyPagingItems.loadState }.collect { loadStates ->
             when (loadStates.refresh) {
                 is LoadState.Error -> {
                     Toast
                         .makeText(
                             context,
-                            (repos.loadState.refresh as LoadState.Error)
-                                .error.message
-                                .toString(),
+                            (lazyPagingItems.loadState.refresh as LoadState.Error).error.message.toString(),
                             Toast.LENGTH_LONG,
                         ).show()
                 }
+
                 else -> Unit
             }
         }
@@ -91,22 +90,33 @@ fun ListContent(
         searchQuery = searchQuery,
         modifier = modifier,
     )
+    LazyListSearch(
+        modifier = modifier,
+        lazyPagingItems = lazyPagingItems,
+    )
+}
+
+@Composable
+private fun LazyListSearch(
+    modifier: Modifier,
+    lazyPagingItems: LazyPagingItems<RepoItem>,
+) {
     Box(modifier = modifier.fillMaxSize()) {
-        if (repos.loadState.refresh is LoadState.Loading) {
+        if (lazyPagingItems.loadState.refresh is LoadState.Loading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
             )
         } else {
             when {
-                repos.itemCount > 0 -> {
+                lazyPagingItems.itemCount > 0 -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         contentPadding = PaddingValues(vertical = 16.dp),
                     ) {
-                        items(count = repos.itemCount, key = { it }) {
-                            repos[it]?.let { repoItem ->
+                        items(count = lazyPagingItems.itemCount, key = { it }) {
+                            lazyPagingItems[it]?.let { repoItem ->
                                 CardRepoItem(
                                     repoItem = repoItem,
                                     modifier = Modifier.fillMaxWidth(),
@@ -114,12 +124,13 @@ fun ListContent(
                             }
                         }
                         item {
-                            if (repos.loadState.append is LoadState.Loading) {
+                            if (lazyPagingItems.loadState.append is LoadState.Loading) {
                                 CircularProgressIndicator()
                             }
                         }
                     }
                 }
+
                 else -> {
                     EmptyContent()
                 }
@@ -131,10 +142,7 @@ fun ListContent(
 @Composable
 fun EmptyContent() {
     Box(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center,
     ) {
         Column(

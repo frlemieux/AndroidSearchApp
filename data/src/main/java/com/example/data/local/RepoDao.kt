@@ -17,6 +17,9 @@ interface RepoDao {
     )
     fun repoEntityPagingSource(): PagingSource<Int, RepoEntity>
 
+    @Query("SELECT `index` FROM `repos` ORDER BY `index` DESC LIMIT 1")
+    suspend fun lastIndex(): Int?
+
     @Query("DELETE FROM repos")
     suspend fun clearRepos()
 

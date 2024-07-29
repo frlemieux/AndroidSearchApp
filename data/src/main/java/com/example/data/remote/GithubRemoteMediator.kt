@@ -27,17 +27,24 @@ class GithubRemoteMediator(
     ): MediatorResult {
         val page =
             when (loadType) {
-                LoadType.REFRESH -> GITHUB_STARTING_PAGE_INDEX
+                LoadType.REFRESH -> {
+                    GITHUB_STARTING_PAGE_INDEX
+                }
                 LoadType.PREPEND -> return MediatorResult.Success(
                     endOfPaginationReached = true,
                 )
 
                 LoadType.APPEND -> {
-                    val lastItem = state.lastItemOrNull()
-                    if (lastItem == null) {
-                        GITHUB_STARTING_PAGE_INDEX
+                    val lastItem =
+                        repoDatabase.withTransaction {
+                            repoDatabase.reposDao.lastIndex() ?: 0
+                        }
+                    if (lastItem == 0) {
+                        return MediatorResult.Success(
+                            endOfPaginationReached = true,
+                        )
                     } else {
-                        (lastItem.index / state.config.pageSize)
+                        (lastItem.div(state.config.pageSize))
                     }
                 }
             }
